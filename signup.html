@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - HackConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="js/css/main.css">
+  <link rel="stylesheet" href="js/css/layout.css">
+  <link rel="stylesheet" href="js/css/components.css">
+  <link rel="stylesheet" href="js/css/pages/auth.css">
+</head>
+<body data-page="signup">
+  <header class="site-header">
+    <a href="index.html" class="logo">Hack<span>Connect</span></a>
+    <a href="login.html" class="header-link">Already have an account? <strong>Login</strong></a>
+  </header>
+
+  <main class="auth-shell">
+    <section class="auth-intro">
+      <p class="eyebrow">Start your builder profile</p>
+      <h1>Create your account.</h1>
+      <p class="subtitle">Register once, then complete your profile with the details teammates and organizers care about.</p>
+    </section>
+
+    <section class="auth-card surface-card">
+      <form id="signupForm" novalidate>
+        <div class="field-grid">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" placeholder="Ram Sharma">
+            <p class="field-error" id="nameErr"></p>
+          </div>
+          <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="ramsharma">
+            <p class="field-error" id="usernameErr"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="ram@sharma.dev">
+          <p class="field-error" id="emailErr"></p>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create a password">
+            <p class="field-error" id="passwordErr"></p>
+          </div>
+          <div class="field">
+            <label for="confirmPassword">Confirm password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password">
+            <p class="field-error" id="confirmPasswordErr"></p>
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label for="role">Primary role</label>
+            <select id="role" name="role">
+              <option value="">Select your role</option>
+              <option>Frontend Developer</option>
+              <option>Backend Developer</option>
+              <option>Full-stack Developer</option>
+              <option>AI/ML Engineer</option>
+              <option>Designer</option>
+              <option>Product Builder</option>
+            </select>
+            <p class="field-error" id="roleErr"></p>
+          </div>
+          <div class="field">
+            <label for="educationLevel">Education level</label>
+            <select id="educationLevel" name="educationLevel">
+              <option value="">Select level</option>
+              <option>High School</option>
+              <option>Undergraduate</option>
+              <option>Postgraduate</option>
+              <option>Bootcamp</option>
+              <option>Professional</option>
+            </select>
+            <p class="field-error" id="educationLevelErr"></p>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">Copyright 2026 HackConnect. All rights reserved.</footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

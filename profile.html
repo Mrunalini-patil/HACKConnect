@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - HackConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="js/css/main.css">
+  <link rel="stylesheet" href="js/css/layout.css">
+  <link rel="stylesheet" href="js/css/components.css">
+  <link rel="stylesheet" href="js/css/pages/profile.css">
+</head>
+<body data-page="profile">
+  <header class="site-header">
+    <a href="dashboard.html" class="logo">Hack<span>Connect</span></a>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="btn btn-ghost">Dashboard</a>
+      <button class="btn btn-primary" type="button" data-action="logout">Logout</button>
+    </nav>
+  </header>
+
+  <main class="profile-shell">
+    <section class="profile-header">
+      <div>
+        <p class="eyebrow">Build your public profile</p>
+        <h1>Show organizers and teammates what you bring.</h1>
+        <p class="subtitle">Add your education, interests, preferred hackathons, experience, achievements, contact info, and supporting files. Everything is saved locally for this demo.</p>
+      </div>
+      <aside class="surface-card summary-card">
+        <p class="card-kicker">Profile summary</p>
+        <h3 id="summaryName">Your profile is starting to take shape.</h3>
+        <p id="summaryRole" class="muted-copy">Complete the form to generate your teammate matches.</p>
+        <div class="profile-progress">
+          <div class="progress-bar"><span id="profileProgressBar"></span></div>
+          <small id="profileProgressText">0% complete</small>
+        </div>
+      </aside>
+    </section>
+
+    <section class="profile-grid">
+      <form id="profileForm" class="surface-card profile-form" novalidate>
+        <div class="section-title-row">
+          <h2>Profile details</h2>
+          <span class="section-pill">Required for matching</span>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input type="text" id="fullName" name="fullName">
+          </div>
+          <div class="field">
+            <label for="headline">Domin</label>
+            <input type="text" id="headline" name="headline" placeholder="AI engineer building for climate and health">
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="college">School or organization</label>
+            <input type="text" id="college" name="college" placeholder="Indian Institute of Technology">
+          </div>
+          <div class="field">
+            <label for="graduationYear">Graduation year</label>
+            <input type="text" id="graduationYear" name="graduationYear" placeholder="2027">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="bio">Short bio</label>
+          <textarea id="bio" name="bio" rows="4" placeholder="What do you enjoy building, and what kind of teammates are you hoping to meet?"></textarea>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" name="skills" placeholder="React, Node.js, Figma, Python">
+          </div>
+          <div class="field">
+            <label for="interests">Interests</label>
+            <input type="text" id="interests" name="interests" placeholder="HealthTech, AI, Web3, EdTech">
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="hackathons">Hackathons you want to join</label>
+            <input type="text" id="hackathons" name="hackathons" placeholder="AI Hack Mumbai, ETHIndia, DevFest Pune">
+          </div>
+          <div class="field">
+            <label for="availability">Availability</label>
+            <select id="availability" name="availability">
+              <option value="">Select availability</option>
+              <option>Weekends only</option>
+              <option>Evenings and weekends</option>
+              <option>Full event availability</option>
+              <option>Flexible</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="experience">Experience and past projects</label>
+          <textarea id="experience" name="experience" rows="4" placeholder="List hackathons, internships, products built, open-source work, or leadership experience."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="achievements">Achievements</label>
+          <textarea id="achievements" name="achievements" rows="3" placeholder="Awards, competition results, certifications, publications, or shipped products."></textarea>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="emailContact">Contact email</label>
+            <input type="email" id="emailContact" name="emailContact" placeholder="you@example.com">
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="linkedinUrl">LinkedIn</label>
+            <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/your-name">
+          </div>
+          <div class="field">
+            <label for="portfolioUrl">Portfolio or GitHub</label>
+            <input type="url" id="portfolioUrl" name="portfolioUrl" placeholder="https://github.com/your-name">
+          </div>
+        </div>
+
+        <div class="field-grid uploads-grid">
+          <div class="field upload-field">
+            <label for="educationProof">Education proof</label>
+            <input type="file" id="educationProof" name="educationProof" accept=".pdf,.png,.jpg,.jpeg">
+            <small class="upload-status" id="educationProofStatus">No file selected</small>
+          </div>
+          <div class="field upload-field">
+            <label for="experienceProof">Experience proof</label>
+            <input type="file" id="experienceProof" name="experienceProof" accept=".pdf,.png,.jpg,.jpeg">
+            <small class="upload-status" id="experienceProofStatus">No file selected</small>
+          </div>
+        </div>
+
+        <div class="field upload-field">
+          <label for="achievementProof">Achievement proof</label>
+          <input type="file" id="achievementProof" name="achievementProof" accept=".pdf,.png,.jpg,.jpeg">
+          <small class="upload-status" id="achievementProofStatus">No file selected</small>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-ghost" type="button" id="previewMatchesBtn">Preview matches</button>
+          <button class="btn btn-primary" type="submit">Save profile</button>
+        </div>
+      </form>
+
+
+    </section>
+  </main>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

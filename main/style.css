@@ -1,0 +1,11 @@
+* {box-sizing: border-box; margin: 0; padding: 0;}
+body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f6ff; color: #1e2a3b; line-height: 1.5;}
+.site-header {background: #1d4ed8; color: #fff; padding: 2rem 1.2rem; text-align: center;}
+.content {max-width: 860px; margin: 1.5rem auto; padding: 0 1rem;}
+.welcome-card, .features {background: #fff; border: 1px solid #dce7ff; border-radius: 12px; padding: 1.3rem; margin-bottom: 1rem; box-shadow: 0 8px 18px rgba(30,42,59,.08);}
+button#greetBtn {background: #1d4ed8; color: #fff; border: 0; padding: 0.65rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600;}
+button#greetBtn:hover {background: #1660c7;}
+.greeting-text {margin-top: 0.7rem; color: #0f172a; font-weight: 600;}
+.features ul {margin-top: 0.6rem; list-style: disc inside;}
+.site-footer {text-align: center; margin-top: 1rem; padding: 0.85rem 1rem; color: #546285;}
+@media (max-width: 620px) {.site-header h1 {font-size: 1.45rem;} .welcome-card, .features {padding: 1rem;}}

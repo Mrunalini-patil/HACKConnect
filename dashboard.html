@@ -1,0 +1,663 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - HackConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="js/css/main.css">
+  <link rel="stylesheet" href="js/css/layout.css">
+  <link rel="stylesheet" href="js/css/components.css">
+  <link rel="stylesheet" href="js/css/pages/dashboard.css">
+</head>
+<body data-page="dashboard">
+  <header class="dashboard-topbar">
+    <a href="dashboard.html" class="logo dashboard-logo">Hack<span>Connect</span></a>
+    <div class="dashboard-search">
+      <span class="search-emoji">&#128269;</span>
+      <input type="text" id="dashboardSearch" placeholder="Search hackathons or tracks...">
+    </div>
+    <div class="dashboard-topbar-actions">
+      <button class="topbar-icon-btn" type="button" id="dashboardPing" title="Notifications">&#128276;</button>
+      <a href="profile.html" class="btn btn-ghost">Profile</a>
+      <button class="btn btn-primary" type="button" data-action="logout">Logout</button>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-orb">&#128640;</div>
+        <div>
+          <strong>Builder Console</strong>
+          <p>Find events. Find people.</p>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Menu</div>
+        <button class="nav-item active" type="button" data-dashboard-page="discover">
+          <span class="nav-icon">&#129517;</span>
+          Discover
+          <span class="nav-count" id="discoverCount">4</span>
+        </button>
+        <button class="nav-item" type="button" data-dashboard-page="saved">
+          <span class="nav-icon">&#128278;</span>
+          Saved
+          <span class="nav-count" id="savedSidebarCount">0</span>
+        </button>
+        <button class="nav-item" type="button" data-dashboard-page="upcoming">
+          <span class="nav-icon">&#128197;</span>
+          Upcoming
+        </button>
+        <button class="nav-item" type="button" data-dashboard-page="workspace">
+          <span class="nav-icon">&#128187;</span>
+          Workspace
+        </button>
+        <button class="nav-item" type="button" data-dashboard-page="messages">
+          <span class="nav-icon">&#128172;</span>
+          Messages
+          <span class="nav-count" id="messagesCount">0</span>
+        </button>
+        <a class="nav-item" href="profile.html">
+          <span class="nav-icon">&#128100;</span>
+          Profile
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+  <div class="sidebar-label">Teams</div>
+
+  <button class="nav-item" type="button" data-dashboard-page="findteammates">
+    <span class="nav-icon">&#128269;</span>
+    Discover Teammates
+  </button>
+
+  <button class="nav-item" type="button" data-dashboard-page="requests">
+    <span class="nav-icon">&#128276;</span>
+    Requests
+  </button>
+
+  <button class="nav-item" type="button" data-dashboard-page="connections">
+    <span class="nav-icon">&#129309;</span>
+    Connections
+  </button>
+
+  <button class="nav-item" type="button" data-dashboard-page="myteam">
+    <span class="nav-icon">&#128101;</span>
+    My Team
+  </button>
+</div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Skills</div>
+        <button class="nav-item" type="button" data-skill-filter="AI"><span class="nav-icon">AI</span>AI / ML</button>
+        <button class="nav-item" type="button" data-skill-filter="Design"><span class="nav-icon">UX</span>Design</button>
+        <button class="nav-item" type="button" data-skill-filter="Web3"><span class="nav-icon">W3</span>Blockchain</button>
+        <button class="nav-item" type="button" data-skill-filter="AI"><span class="nav-icon">HT</span>HealthTech</button>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <section id="page-discover" class="dashboard-page">
+        <div class="page-header">
+          <h2 id="dashboardGreeting">Discover Hackathons</h2>
+          <p id="dashboardSubtitle">Explore events, filter by skills, and save the ones that fit your profile best.</p>
+        </div>
+
+        <section class="hero-ribbon surface-card">
+          <div class="hero-ribbon-copy">
+            <p class="card-kicker">Live discovery</p>
+            <h3>Build your team before the deadline gets you.</h3>
+            <p class="muted-copy">Browse curated events, save the strongest matches, and keep your profile application-ready.</p>
+          </div>
+          <div class="hero-ribbon-badges">
+            <span>Fast matching</span>
+            <span>Better fit</span>
+            <span>Stronger applications</span>
+          </div>
+        </section>
+
+        <div class="stats-row dashboard-stats">
+          <article class="surface-card stat-card">
+            <p class="card-kicker">Saved events</p>
+            <div class="stat-value" id="savedCount">0</div>
+            <div class="stat-label">Hackathons bookmarked</div>
+          </article>
+          <article class="surface-card stat-card">
+            <p class="card-kicker">Profile score</p>
+            <div class="stat-value" id="profileScore">0%</div>
+            <div class="stat-label">Application readiness</div>
+          </article>
+          <article class="surface-card stat-card">
+            <p class="card-kicker">Best matches</p>
+            <div class="stat-value" id="matchCount">0</div>
+            <div class="stat-label">Teammates aligned to your interests</div>
+          </article>
+        </div>
+
+        <div class="filter-row" id="hackathonFilters">
+          <button class="chip active" data-filter="all" type="button">All</button>
+          <button class="chip" data-filter="AI" type="button">AI</button>
+          <button class="chip" data-filter="Web3" type="button">Web3</button>
+          <button class="chip" data-filter="Design" type="button">Design</button>
+        </div>
+
+        <div class="track-search-container">
+          <span class="search-emoji">&#127919;</span>
+          <input type="text" id="trackSearch" placeholder="Search by track (e.g., DeFi, HealthTech, Accessibility)..." class="track-search">
+          <button class="track-search-clear" type="button" id="clearTrackSearch" title="Clear track filter">&#10005;</button>
+        </div>
+
+        <div id="hackathonGrid" class="card-grid"></div>
+
+        <section class="dashboard-teammates-section">
+          <div class="section-title-row">
+            <div>
+              <h2>Available Teammates</h2>
+              <p>Builders currently looking for teammates, with quick profile details right on your dashboard.</p>
+            </div>
+            <button class="btn btn-ghost" type="button" id="browseTeammatesBtn">Browse all</button>
+          </div>
+          <div id="dashboardTeammateGrid" class="card-grid teammate-preview-grid"></div>
+        </section>
+      </section>
+
+      <section id="page-saved" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>Saved Hackathons</h2>
+          <p>Everything you bookmarked will stay here for quick access.</p>
+        </div>
+        <div id="savedHackathonGrid" class="card-grid"></div>
+      </section>
+
+      <section id="page-application" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2 id="applicationTitle">Hackathon Application</h2>
+          <p id="applicationSubtitle">Fill in your team details and project information on a separate application page.</p>
+        </div>
+
+        <section class="surface-card application-panel">
+          <div class="section-title-row">
+            <div>
+              <p class="card-kicker">Application details</p>
+              <h3 id="applicationHackathonHeading">Apply for a hackathon</h3>
+              <p id="applicationThemeHint" class="muted-copy">Your project title will be checked against this hackathon's tracks automatically.</p>
+            </div>
+            <button class="btn btn-ghost" type="button" id="cancelApplicationBtn">Back to Discover</button>
+          </div>
+
+          <form id="hackathonApplicationForm" class="application-form">
+            <div class="field-grid">
+              <div class="field">
+                <label for="applicationHackathonName">Selected hackathon</label>
+                <input type="text" id="applicationHackathonName" name="applicationHackathonName" readonly>
+              </div>
+              <div class="field">
+                <label for="applicationTeamSizeHint">Team size limit</label>
+                <input type="text" id="applicationTeamSizeHint" name="applicationTeamSizeHint" readonly>
+              </div>
+              <div class="field">
+                <label for="teamName">Team name</label>
+                <input type="text" id="teamName" name="teamName" placeholder="Enter your team name" required>
+              </div>
+              <div class="field">
+                <label for="teamMemberCount">Number of team members</label>
+                <select id="teamMemberCount" name="teamMemberCount" required></select>
+              </div>
+              <div class="field">
+                <label for="mentorName">Mentor full name</label>
+                <input type="text" id="mentorName" name="mentorName" placeholder="Enter mentor full name">
+              </div>
+              <div class="field">
+                <label for="projectTitle">Project title</label>
+                <input type="text" id="projectTitle" name="projectTitle" placeholder="Enter your project title" required>
+                <div id="projectThemeFeedback" class="application-theme-feedback"></div>
+              </div>
+            </div>
+
+            <section class="application-subsection">
+              <div class="section-title-row">
+                <div>
+                  <h3>Team leader</h3>
+                  <p class="muted-copy">Leader details will be included with the application.</p>
+                </div>
+              </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="leaderFirstName">First name</label>
+                  <input type="text" id="leaderFirstName" name="leaderFirstName" required>
+                </div>
+                <div class="field">
+                  <label for="leaderMiddleName">Middle name</label>
+                  <input type="text" id="leaderMiddleName" name="leaderMiddleName">
+                </div>
+                <div class="field">
+                  <label for="leaderSurname">Surname</label>
+                  <input type="text" id="leaderSurname" name="leaderSurname" required>
+                </div>
+                <div class="field">
+                  <label for="leaderStatus">Status</label>
+                  <select id="leaderStatus" name="leaderStatus" required>
+                    <option value="">Select status</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Graduate">Graduate</option>
+                    <option value="Postgraduate">Postgraduate</option>
+                    <option value="Professional">Professional</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="leaderUniversity">University / college</label>
+                  <input type="text" id="leaderUniversity" name="leaderUniversity" required>
+                </div>
+                <div class="field">
+                  <label for="leaderEmail">Email ID</label>
+                  <input type="email" id="leaderEmail" name="leaderEmail" required>
+                </div>
+                <div class="field">
+                  <label for="leaderPhone">Phone number</label>
+                  <input type="tel" id="leaderPhone" name="leaderPhone" required>
+                </div>
+              </div>
+            </section>
+
+            <section class="application-subsection">
+              <div class="section-title-row">
+                <div>
+                  <h3>Team members</h3>
+                  <p id="memberSlotHint" class="muted-copy">Choose up to 10 team members and teammate slots will be created automatically.</p>
+                </div>
+              </div>
+              <div id="applicationMembersContainer" class="application-members"></div>
+            </section>
+
+            <div class="card-actions">
+              <button class="btn btn-primary" type="submit">Submit application</button>
+              <button class="btn btn-ghost" type="button" id="resetApplicationBtn">Reset form</button>
+            </div>
+          </form>
+        </section>
+      </section>
+
+      <section id="page-upcoming" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>Upcoming Events</h2>
+          <p>Hackathons that best match your selected interests and goals.</p>
+        </div>
+        <div id="upcomingHackathons" class="stack-list"></div>
+      </section>
+
+      <section id="page-workspace" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>Team Workspace</h2>
+          <p>Connect GitHub, review repo health, and keep your team moving together.</p>
+        </div>
+
+        <section class="workspace-hero surface-card">
+          <div>
+            <p class="card-kicker">GitHub Collaboration</p>
+            <h3 id="workspaceTitle">Connect a repository for your hackathon team.</h3>
+            <p class="muted-copy" id="workspaceSubtitle">Once connected, your team can track commits, pull requests, issues, branches, and project progress from one place.</p>
+          </div>
+          <div class="workspace-hero-actions">
+            <button class="btn btn-primary" type="button" id="githubConnectBtn">Connect GitHub</button>
+            <button class="btn btn-ghost" type="button" id="githubSyncBtn">Refresh status</button>
+          </div>
+        </section>
+
+        <section class="workspace-grid">
+          <div class="workspace-main-stack">
+            <section class="surface-card workspace-panel">
+              <div class="section-title-row">
+                <h2>Repository Overview</h2>
+                <span class="section-pill" id="workspaceRepoBadge">No repo linked</span>
+              </div>
+              <div class="workspace-stats" id="workspaceStats"></div>
+            </section>
+
+            <section class="surface-card workspace-panel">
+              <div class="section-title-row">
+                <h2>Recent Commits</h2>
+                <span class="section-pill">Live demo feed</span>
+              </div>
+              <div class="stack-list" id="workspaceCommits"></div>
+            </section>
+
+            <section class="surface-card workspace-panel">
+              <div class="section-title-row">
+                <h2>Pull Requests</h2>
+                <span class="section-pill">Review queue</span>
+              </div>
+              <div class="stack-list" id="workspacePullRequests"></div>
+            </section>
+          </div>
+
+          <aside class="workspace-side-stack">
+            <section class="surface-card workspace-panel">
+              <div class="section-title-row">
+                <h2>Open Issues</h2>
+                <span class="section-pill">Team blockers</span>
+              </div>
+              <div class="stack-list" id="workspaceIssues"></div>
+            </section>
+
+            <section class="surface-card workspace-panel">
+              <div class="section-title-row">
+                <h2>Branches & Deploy</h2>
+                <span class="section-pill">Ship status</span>
+              </div>
+              <div class="stack-list" id="workspaceBranches"></div>
+            </section>
+
+            <section class="surface-card workspace-panel">
+              <div class="section-title-row">
+                <h2>Collaboration Board</h2>
+                <span class="section-pill">Team focus</span>
+              </div>
+              <div class="stack-list" id="workspaceTasks"></div>
+            </section>
+          </aside>
+        </section>
+      </section>
+
+      <section id="page-messages" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>Messages</h2>
+          <p>See the messages you have sent from one inbox.</p>
+        </div>
+        <section class="messages-layout">
+          <div class="surface-card messages-list-panel">
+            <div class="section-title-row">
+              <h3>Inbox</h3>
+              <span class="section-pill" id="messagesUnreadPill">0 unread</span>
+            </div>
+            <div id="messagesInboxList" class="messages-inbox-list"></div>
+          </div>
+          <div class="surface-card messages-thread-panel">
+            <div id="messagesThreadEmpty" class="empty-state">
+              <p>Select a conversation to read your sent messages.</p>
+            </div>
+            <div id="messagesThreadView" hidden>
+              <div class="messages-thread-header">
+                <div>
+                  <h3 id="messagesThreadName"></h3>
+                  <p id="messagesThreadRole" class="muted-copy"></p>
+                </div>
+              </div>
+              <div id="messagesThreadMessages" class="messages-thread-messages"></div>
+              <div class="empty-state">
+                <p>This inbox is read-only.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="page-findteammates" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>Find Teammates</h2>
+          <p>Browse registered members and send connection requests. Accepted requests will move into Connections.</p>
+        </div>
+
+        <div class="teammate-search-container">
+          <span class="search-emoji">&#128269;</span>
+          <input type="text" id="teammatSearch" placeholder="Search by name, role, skills, or interests..." class="teammate-search">
+        </div>
+
+        <div class="filter-row" id="teammatFilters">
+          <button class="chip teammat-filter-chip active" data-filter="all" type="button">All</button>
+          <button class="chip teammat-filter-chip" data-filter="AI" type="button">AI / ML</button>
+          <button class="chip teammat-filter-chip" data-filter="Design" type="button">Design</button>
+          <button class="chip teammat-filter-chip" data-filter="Web3" type="button">Blockchain</button>
+          <button class="chip teammat-filter-chip" data-filter="HealthTech" type="button">HealthTech</button>
+        </div>
+
+        <div id="teammatGrid" class="card-grid"></div>
+      </section>
+
+      <section id="page-requests" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>Connection Requests</h2>
+          <p>Review and respond to incoming connection requests.</p>
+        </div>
+        <div id="requestsGrid" class="card-grid"></div>
+      </section>
+
+      <section id="page-connections" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>My Connections</h2>
+          <p>Accepted requests appear here for everyone. Only leaders can add accepted connections to the team.</p>
+        </div>
+        <div id="connectionsGrid" class="card-grid"></div>
+      </section>
+
+      <section id="page-myteam" class="dashboard-page" hidden>
+        <div class="page-header">
+          <h2>My Team</h2>
+          <p>One active team at a time. Leaders can manage members, and members can leave their current team.</p>
+        </div>
+        <section class="surface-card" style="margin-bottom: 1rem; padding: 1rem;">
+          <div class="section-title-row">
+            <div>
+              <h3 style="margin-bottom: 0.25rem;">Team Access</h3>
+              <p class="muted-copy">Choose whether you want to use the dashboard as a user, leader, or member.</p>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="dashboardTeamRole">My team role</label>
+              <select id="dashboardTeamRole" name="dashboardTeamRole">
+                <option value="user">User</option>
+                <option value="leader">Leader</option>
+                <option value="member">Member</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>What each role can do</label>
+              <div class="muted-copy">
+                User sees accepted connections, leader can add accepted members to the team, and member can leave the current team.
+              </div>
+            </div>
+          </div>
+          <div class="card-actions" style="margin-top: 1rem;">
+            <button class="btn btn-primary" type="button" id="saveDashboardTeamRoleBtn">Save Team Role</button>
+          </div>
+        </section>
+        <div id="myTeamGrid" class="card-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="suggestion-popup" id="suggPopup">
+    <div class="popup-header">
+      <div class="popup-header-left">
+        <span class="popup-spark">&#10024;</span>
+        <span class="popup-title">Suggested for you</span>
+      </div>
+      <button class="popup-close" type="button" id="closePopupBtn">&#10005;</button>
+    </div>
+    <div class="popup-body">
+      <p class="popup-subtitle">Based on your profile, saved skills, and current event activity.</p>
+      <div id="popupCards"></div>
+      <button class="popup-action" type="button" id="browsePopupBtn">Browse all matches</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalBox">
+      <div class="modal-banner" id="modalBanner">
+        <div class="modal-toolbar">
+          <button class="modal-toolbar-btn" type="button" id="expandModalBtn">Expand</button>
+          <button class="modal-toolbar-btn modal-close-btn" type="button" id="closeModalBtn">Close</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-tags" id="modalTags"></div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-org" id="modalOrg"></div>
+        <div class="modal-grid" id="modalGrid"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-extra" id="modalExtra">
+          <div class="modal-section">
+            <h4>Tracks</h4>
+            <div class="badge-row" id="modalTracks"></div>
+          </div>
+          <div class="modal-section">
+            <h4>Timeline</h4>
+            <div class="modal-timeline" id="modalTimeline"></div>
+          </div>
+          <div class="modal-section">
+            <h4>Organizer Contact</h4>
+            <div class="modal-contact" id="modalContact"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="modal-btn-primary" type="button" id="modalApplyBtn">Apply Now</button>
+          <button class="modal-btn-ghost" type="button" id="modalSaveBtn">Save Event</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teammate Profile Modal -->
+  <div class="modal-overlay" id="profileModalOverlay">
+    <div class="modal profile-modal-expanded" id="profileModal">
+      <div class="profile-modal-close-btn-container">
+        <button class="modal-toolbar-btn" type="button" id="expandProfileModalBtn" title="Expand to fullscreen">&#9974;</button>
+        <button class="modal-close-btn" type="button" id="closeProfileModalBtn">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-modal-header-expanded">
+          <div class="teammate-avatar" id="profileModalAvatar"></div>
+          <div>
+            <h2 id="profileModalName"></h2>
+            <p id="profileModalRole" class="teammate-role-large"></p>
+          </div>
+        </div>
+
+        <p id="profileModalGoal" class="profile-modal-goal"></p>
+
+        <div class="profile-modal-sections">
+          <section class="profile-modal-section-box">
+            <h3>Skills & Expertise</h3>
+            <div class="badge-row" id="profileModalSkills"></div>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Interests</h3>
+            <div class="badge-row" id="profileModalInterests"></div>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Availability</h3>
+            <p id="profileModalAvailability" class="availability-info"></p>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Education</h3>
+            <p id="profileModalEducation" class="profile-proof-copy"></p>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Experience</h3>
+            <p id="profileModalExperience" class="profile-proof-copy"></p>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Achievements</h3>
+            <p id="profileModalAchievements" class="profile-proof-copy"></p>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Proof Documents</h3>
+            <div id="profileModalProofs" class="profile-proof-list"></div>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Profile Link</h3>
+            <p id="profileModalLink" class="profile-link"></p>
+          </section>
+
+          <section class="profile-modal-section-box">
+            <h3>Teams</h3>
+            <div id="profileModalTeams">
+              <div id="availableTeammates" class="team-subsection">
+                <p class="team-label"><strong>Discover Teammates:</strong></p>
+                <div id="availableTeammatesList" class="badge-row"></div>
+              </div>
+              <div id="myTeam" class="team-subsection">
+                <p class="team-label"><strong>My Team:</strong></p>
+                <div id="myTeamList" class="badge-row"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="profile-modal-actions">
+          <button class="btn btn-primary btn-large" type="button" id="chatFromProfileBtn">Open Chat</button>
+          <button class="btn btn-ghost btn-large" type="button" id="openRecipientDemoBtn">View Messages</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Modal -->
+  <div class="modal-overlay" id="chatModalOverlay">
+    <div class="modal chat-modal" id="chatModal">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <h3 id="chatPartnername"></h3>
+          <p id="chatPartnerrole"></p>
+        </div>
+        <button class="modal-toolbar-btn modal-close-btn" type="button" id="closeChatModalBtn">Close</button>
+      </div>
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-safety-bar">
+          <p id="chatSafetyNote" class="muted-copy">Type a message and the teammate will send an automated reply for now.</p>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Type your message..." class="chat-input">
+          <button type="button" id="sendMessageBtn" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="recipientModalOverlay">
+    <div class="modal chat-modal" id="recipientModal">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <h3 id="recipientInboxName"></h3>
+          <p id="recipientInboxRole"></p>
+        </div>
+        <button class="modal-toolbar-btn modal-close-btn" type="button" id="closeRecipientModalBtn">Close</button>
+      </div>
+      <div class="chat-container">
+        <div class="chat-messages" id="recipientInboxMessages"></div>
+        <div class="empty-state">
+          <p>This view is read-only and shows sent messages only.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notif-panel" id="notifPanel">
+    <div class="notif-panel-head">
+      <h4>Notifications</h4>
+      <button class="mark-read" type="button" id="markReadBtn">Mark all read</button>
+    </div>
+    <div id="notifList"></div>
+  </div>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/modules/profile.js"></script>
+  <script src="js/modules/chat.js"></script>
+  <script src="js/modules/teammates.js"></script>
+  <script src="js/modules/search.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
