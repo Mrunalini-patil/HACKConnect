@@ -1,6 +1,7 @@
 # HackConnect
 
-HackConnect is a full-stack platform designed to help students, developers, and creators discover peer teammates and collaborate effectively for hackathons and coding competitions.
+HackConnect is a full stack platform designed to help students, developers, and creators discover peer teammates and collaborate effectively for hackathons and coding competitions.
+currently it is a frontend oriente project.
 
 ---
 
